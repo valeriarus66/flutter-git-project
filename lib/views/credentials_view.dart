@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project2/screens/signup_screen.dart';
 
 import '../helpers-constants/constants.dart';
 import '../helpers-constants/strings.dart';
@@ -7,6 +8,7 @@ import '../helpers-constants/strings.dart';
 class CredentialsView extends StatefulWidget {
   final String screenTitle;
   final String buttonTitle;
+  final String appBarTitle;
   final bool isSignUpScreen;
   late final Color _textColor;
 
@@ -14,33 +16,34 @@ class CredentialsView extends StatefulWidget {
     Key? key,
     required this.screenTitle,
     required this.buttonTitle,
+    required this.appBarTitle,
     this.isSignUpScreen = false,
-  }) : super (key: key) {
+  }) : super(key: key) {
     _textColor =
-    (isSignUpScreen ? Colors.deepOrangeAccent[700] : Colors.black)!;
+        (isSignUpScreen ? Colors.deepOrangeAccent[700] : Colors.black)!;
   }
   @override
   //_LogInorSignUpViewState createState() => _LogInorSignUpViewState();
   _LogInState createState() => _LogInState();
 }
 
-class _LogInState extends State<CredentialsView>{
+class _LogInState extends State<CredentialsView> {
   final _form = GlobalKey<FormState>();
   bool _isValidEmail = false;
   bool _isValidPassword = false;
 
-  void _saveFormEmail(){
+  void _saveFormEmail() {
     setState(() {
       _isValidEmail = _form.currentState!.validate();
       _isValidPassword = _form.currentState!.validate();
     });
-}
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Login Page"), //widget.title
+        title: Text(widget.appBarTitle), //widget.title
       ),
       body: Center(
         //the Form here
@@ -63,17 +66,17 @@ class _LogInState extends State<CredentialsView>{
                   child: TextFormField(
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Email',
-                        hintText: 'Enter valid email id as abc@gmail.com'),
+                        labelText: labelTextEmail,
+                        hintText: hintTextEmail),
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       //check if this field is empty
-                      if(value == null || value.isEmpty){
-                        return "This field is requiered";
+                      if (value == null || value.isEmpty) {
+                        return requieredString;
                       }
                       //usinf regular expresion
-                      if(!RegExp(r'\S+@\S+\.\S+').hasMatch(value)){
-                        return "Please enter a valid email adress";
+                      if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
+                        return validEmailString;
                       }
                       //the email is valid
                       return null;
@@ -82,19 +85,19 @@ class _LogInState extends State<CredentialsView>{
                 ),
                 Padding(
                   padding: const EdgeInsets.only(
-                      left: 15.0, right: 15.0, top: 15, bottom: 0),
+                      left: 15.0, right: 15.0, top: 15, bottom: 10),
                   //padding: EdgeInsets.symmetric(horizontal: 15),
                   child: TextFormField(
                     obscureText: true,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
-                        labelText: 'Password',
-                        hintText: 'Enter secure password'),
+                        labelText: labelTextPassword,
+                        hintText: hintTextPassword),
                     keyboardType: TextInputType.visiblePassword,
-                    validator: (value){
+                    validator: (value) {
                       //check if this field is empty
-                      if(value == null || value.isEmpty){
-                        return "This field is requiered";
+                      if (value == null || value.isEmpty) {
+                        return requieredString;
                       }
                       //the email is valid
                       return null;
@@ -102,24 +105,44 @@ class _LogInState extends State<CredentialsView>{
                   ),
                 ),
                 Container(
+                  //padding:const EdgeInsets.only(top: 60.0),
+                  // margin:
                   height: 50,
                   width: 250,
+
                   decoration: BoxDecoration(
-                      color: Colors.blueGrey, borderRadius: BorderRadius.circular(20)),
+                      color: Colors.blueGrey,
+                      borderRadius: BorderRadius.circular(20)),
+
                   child: ElevatedButton(
-                    onPressed: () {
-                      _saveFormEmail(); child: Text("Check Email");
-                      const SizedBox(height: 25);
-                    },
                     child: Text(
-                      'Login',
+                      widget.buttonTitle,
                       style: TextStyle(color: Colors.white, fontSize: 25),
                     ),
+                    onPressed: () {
+                      _saveFormEmail();
+                      Text("Check Email");
+                      const SizedBox(height: 25);
+                      _isValidEmail & _isValidPassword
+                          ? Navigator.pushNamed(
+                              context,
+                              SignUpScreen.routeName,
+                            )
+                          : Container();
+                    },
                   ),
                 ),
+                Container(
+                  child: TextButton(
+                      child: Text(signupString),
+                    onPressed:() => Navigator.pushNamed(
+                      context,
+                      SignUpScreen.routeName,
+                    ) ,
+                  )
+                ),
               ],
-            )
-        ),
+            )),
       ),
     );
   }

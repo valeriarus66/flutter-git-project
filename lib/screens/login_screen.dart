@@ -7,7 +7,7 @@ import '../views/credentials_view.dart';
 
 
 class LogInScreen extends StatelessWidget {
-  static const routeName = '/';
+  static const routeName = 'login';
 
   const LogInScreen({Key? key}) : super(key: key);
 
@@ -24,6 +24,7 @@ class LogInScreen extends StatelessWidget {
             child: CredentialsView(
               screenTitle: loginString,
               buttonTitle: loginButtonTitle,
+              appBarTitle: appBarLogInTitle,
             ),
           ),
         ),
