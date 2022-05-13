@@ -7,7 +7,10 @@ import '../views/credentials_view.dart';
 
 
 class LogInScreen extends StatelessWidget {
+  static const routeName = '/';
+
   const LogInScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
