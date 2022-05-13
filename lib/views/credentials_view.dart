@@ -50,6 +50,7 @@ class _LogInState extends State<CredentialsView> {
         child: Form(
             key: _form,
             child: Column(
+
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(top: 60.0),
@@ -132,7 +133,7 @@ class _LogInState extends State<CredentialsView> {
                     },
                   ),
                 ),
-                Container(
+               /* Container(
                   child: TextButton(
                       child: Text(signupString),
                     onPressed:() => Navigator.pushNamed(
@@ -140,7 +141,7 @@ class _LogInState extends State<CredentialsView> {
                       SignUpScreen.routeName,
                     ) ,
                   )
-                ),
+                ),*/
               ],
             )),
       ),
