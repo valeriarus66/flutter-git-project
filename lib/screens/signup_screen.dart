@@ -22,8 +22,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-          verticalDirection: VerticalDirection.down,
+         // verticalDirection: VerticalDirection.down,
           children: <Widget>[
             /*  Padding(
               padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),

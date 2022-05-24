@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project2/screens/currency_screen.dart';
 import 'package:flutter_project2/screens/login_screen.dart';
 import 'package:flutter_project2/screens/signup_screen.dart';
 
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget {
       initialRoute: LogInScreen.routeName,
       routes:{
         LogInScreen.routeName:(context) => LogInScreen(),
-       SignUpScreen.routeName:(context) => SignUpScreen()
+       SignUpScreen.routeName:(context) => SignUpScreen(),
+        CurrencyScreen.routeName:(context) => CurrencyScreen(),
       }
     );
   }

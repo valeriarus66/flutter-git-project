@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project2/helpers-constants/strings.dart';
 import 'package:flutter_project2/screens/signup_screen.dart';
 
+import 'currency_screen.dart';
+
 class LogInScreen extends StatefulWidget{
 
   const LogInScreen({Key? key}) : super(key: key);
@@ -108,7 +110,7 @@ class _LogInScreenState extends State<LogInScreen> {
                       const SizedBox(height: 25);
                       Navigator.pushNamed(
                           context,
-                          SignUpScreen.routeName,
+                          CurrencyScreen.routeName,
                       );
                     },
                     child: Text(
