@@ -39,6 +39,8 @@ class _CurrencyState extends State<CurrencyScreen> {
               currencyBase: item.base,
               currencyRates: item.rates,
               currencyValue: item.value,
+
+
             );
           },
         ));
