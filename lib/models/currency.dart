@@ -10,7 +10,7 @@ class Currency {
     base = json['base'];
     rates = json['rates'] != null ? new Rates.fromJson(json['rates']) : null;
   }
-
+//
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['date'] = this.date;
@@ -35,7 +35,7 @@ class Rates {
   double? rOL;
   double? rON;
   double? rUB;
-  int? uSD;
+  double? uSD;
 
   Rates(
       {this.aDA,

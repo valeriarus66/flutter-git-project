@@ -17,7 +17,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
+        primarySwatch: Colors.lime,
         primaryColor: Colors.limeAccent[400],
+        //MaterialColor(
+         // 1,{1:Colors.limeAccent[400]!}),
+      //  scaffoldBackgroundColor: Colors.pinkAccent[400],
       ),
       //home: const MyHomePage(title: 'Flutter Demo Home Page'),
       initialRoute: LogInScreen.routeName,
