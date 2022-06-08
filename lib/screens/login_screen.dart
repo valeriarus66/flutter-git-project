@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project2/helpers-constants/strings.dart';
+import 'package:flutter_project2/managers/authentication_manager.dart';
 import 'package:flutter_project2/screens/signup_screen.dart';
 
 import 'currency_screen.dart';
@@ -20,12 +21,10 @@ class _LogInScreenState extends State<LogInScreen> {
   bool _isValidEmail = false;
   bool _isValidPassword = false;
 
-  void _saveFormEmail(){
-    setState(() {
-      _isValidEmail = _form.currentState!.validate();
-      _isValidPassword = _form.currentState!.validate();
-    });
-  }
+  String _email = "";
+  String _password = "";
+  /// fa authentication si pt sing in
+
 
   @override
   Widget build(BuildContext context) {
@@ -36,9 +35,6 @@ class _LogInScreenState extends State<LogInScreen> {
       ),
 
       body: SingleChildScrollView(
-        //the Form here
-        child: Form(
-            key: _form,
             child: Column(
               children: <Widget>[
                 Padding(
@@ -53,45 +49,33 @@ class _LogInScreenState extends State<LogInScreen> {
                 Padding(
                   //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
                   padding: EdgeInsets.symmetric(horizontal: 15),
-                  child: TextFormField(
+                  child: TextField(
+                    onChanged: (newValue){
+                      _email = newValue;
+                    },
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: labelTextEmail,
                         hintText: hintTextEmail),
                     keyboardType: TextInputType.emailAddress,
-                    validator: (value) {
-                      //check if this field is empty
-                      if(value == null || value.isEmpty){
-                        return requieredString;
-                      }
-                      //usinf regular expresion
-                      if(!RegExp(r'\S+@\S+\.\S+').hasMatch(value)){
-                        return validEmailString;
-                      }
-                      //the email is valid
-                      return null;
-                    },
+
                   ),
                 ),
                 Padding(
                  // padding: //const EdgeInsets.only(
                      // left: 15.0, right: 15.0, top: 15, bottom: 0),
                   padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-                  child: TextFormField(
+                  child: TextField(
+                    onChanged: (newValue){
+                      _password = newValue;
+                    },
                     obscureText: true,
                     decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: labelTextPassword,
                         hintText: hintTextPassword),
                     keyboardType: TextInputType.visiblePassword,
-                    validator: (value){
-                      //check if this field is empty
-                      if(value == null || value.isEmpty){
-                        return requieredString;
-                      }
-                      //the email is valid
-                      return null;
-                    },
+
                   ),
                 ),
                 TextButton(
@@ -106,12 +90,17 @@ class _LogInScreenState extends State<LogInScreen> {
                   width: 250,
                   child: ElevatedButton(
                     onPressed: () {
-                      _saveFormEmail();
-                      const SizedBox(height: 25);
-                      Navigator.pushNamed(
+                      bool isValid = validateFields();
+                      if(isValid){
+                        Navigator.pushNamed(
                           context,
                           CurrencyScreen.routeName,
-                      );
+                          //SignUpScreen.routeName,
+                        );
+                      }
+                    //  _saveFormEmail();
+                      const SizedBox(height: 25);
+
                     },
                     child: Text(
                       loginButtonTitle,
@@ -135,8 +124,23 @@ class _LogInScreenState extends State<LogInScreen> {
                 )
               ],
             )
-        ),
       ),
     );
+  }
+  void authenticateUser(){
+    AuthenticationManager _authenticationManager = AuthenticationManager();
+    _authenticationManager.logInUser(_email, _password);
+  }
+
+bool validateFields(){
+    if(_email.isNotEmpty && _password.isNotEmpty) {
+      authenticateUser();
+      return true;
+    }
+    else{
+      SnackBar initSnackbar = const SnackBar(content: const Text("Email and password are mandatory"),);
+      ScaffoldMessenger.of(context).showSnackBar(initSnackbar);
+    }
+    return false;
   }
 }

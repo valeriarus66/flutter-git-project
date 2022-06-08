@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../helpers-constants/strings.dart';
+import '../managers/authentication_manager.dart';
+import 'currency_screen.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -14,6 +16,11 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _form = GlobalKey<FormState>();
 
+  String _email = "";
+  String _password = "";
+  String _firstName = "";
+  String _secondName = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,21 +31,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
-         // verticalDirection: VerticalDirection.down,
           children: <Widget>[
-            /*  Padding(
-              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 25),
-              child: Center(
-                child: Container(
-                  width: 200,
-                  height: 150,
-                ),
-              ),
-            ),*/
             Padding(
               padding:
                   EdgeInsets.only(left: 25.0, right: 25.0, top: 30, bottom: 8),
-              //padding: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
               child: TextFormField(
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -111,7 +107,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   // Background color
                   primary: Theme.of(context).colorScheme.primary,
                 ).copyWith(elevation: ButtonStyleButton.allOrNull(0.0)),
-                onPressed: (){},
+                onPressed: (){
+                  Navigator.pushNamed(context, CurrencyScreen.routeName);
+                },
                 child: Text('Sign in', style: TextStyle(fontSize: 30)),
               ),
             ),
@@ -119,5 +117,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+
+  void authenticateUser(){
+    AuthenticationManager _authenticationManager = AuthenticationManager();
+    _authenticationManager.logInUser(_email, _password);
   }
 }

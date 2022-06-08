@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project2/managers/latest_currency_manager.dart';
+
 import 'package:flutter_project2/models/currency.dart';
-import 'package:flutter/services.dart' as rootBundle;
-import '../views/currency_view.dart';
+import 'package:flutter/services.dart' ;//as rootBundle;
+
 
 class CurrencyScreen extends StatefulWidget {
   const CurrencyScreen({Key? key}) : super(key: key);
@@ -38,7 +38,10 @@ class _CurrencyState extends State<CurrencyScreen> {
               return Center(child: Text("${data.error}"));
             } else if (data.hasData) {
               var items = data.data as List<Currency>;
-              return ListView.builder(itemBuilder: (context, index) {
+              return ListView.builder(
+                 itemCount: items == null ? 0: items.length,
+                  itemBuilder: (context, index) {
+
                 return Card(
                   elevation: 5,
                   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 6),
@@ -48,9 +51,19 @@ class _CurrencyState extends State<CurrencyScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Container(
-                          child: // vezi minutu 16:53 din video
-                        )
+                        Expanded(child:Container(
+                          padding: EdgeInsets.only(bottom:8),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(padding: EdgeInsets.only(left:8,right:8),child: Text(items[index].base.toString()),),
+                                Padding(padding: EdgeInsets.only(left:8,right:8),child: Text(items[index].rates.toString()),),
+
+                              ],
+                            ),
+
+                        ))
                       ],
                     ),
                   ),
@@ -81,7 +94,7 @@ class _CurrencyState extends State<CurrencyScreen> {
 
   Future<List<Currency>> ReadJsonData() async {
     final jsonData =
-        await rootBundle.rootBundle.loadString('jsonfile/latest_currency.json');
+        await rootBundle.loadString('jsonfile/latest_currency.json');
     final list = json.decode(jsonData) as List<dynamic>;
 
     return list.map((e) => Currency.fromJson(e)).toList();
