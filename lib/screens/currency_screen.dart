@@ -2,9 +2,11 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project2/managers/authentication_manager.dart';
 
 import 'package:flutter_project2/models/currency.dart';
-import 'package:flutter/services.dart' ;//as rootBundle;
+import 'package:flutter/services.dart' ;
+import 'package:provider/provider.dart';//as rootBundle;
 
 
 class CurrencyScreen extends StatefulWidget {
@@ -31,7 +33,22 @@ class _CurrencyState extends State<CurrencyScreen> {
             ),
           ),
         ),
-        body: FutureBuilder(
+        body: Center(
+       child: Column(
+         children: [
+           Text("CURRENCY PAGE"),
+           ElevatedButton(
+               onPressed: (){
+                 context.read<AuthenticationManager>().signOutUser();
+
+               },
+               child:  Text("Sign Out"),
+           )
+         ]
+       )
+
+       )
+      /*FutureBuilder(
           future: ReadJsonData(),
           builder: (context, data) {
             if (data.hasError) {
@@ -73,7 +90,8 @@ class _CurrencyState extends State<CurrencyScreen> {
               return Center(child: CircularProgressIndicator());
             }
           },
-        )
+        ), */
+   // )
         /*ListView.builder(
           padding: const EdgeInsets.symmetric(horizontal: 15),
           itemCount: currency_list.length,
@@ -89,7 +107,7 @@ class _CurrencyState extends State<CurrencyScreen> {
             );
           },
         )*/
-        );
+    );
   }
 
   Future<List<Currency>> ReadJsonData() async {

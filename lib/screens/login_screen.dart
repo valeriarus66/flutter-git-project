@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project2/helpers-constants/strings.dart';
 import 'package:flutter_project2/managers/authentication_manager.dart';
 import 'package:flutter_project2/screens/signup_screen.dart';
+import 'package:provider/provider.dart';
 
 import 'currency_screen.dart';
 
@@ -90,17 +91,24 @@ class _LogInScreenState extends State<LogInScreen> {
                   width: 250,
                   child: ElevatedButton(
                     onPressed: () {
-                      bool isValid = validateFields();
-                      if(isValid){
-                        Navigator.pushNamed(
-                          context,
-                          CurrencyScreen.routeName,
-                          //SignUpScreen.routeName,
-                        );
-                      }
-                    //  _saveFormEmail();
-                      const SizedBox(height: 25);
+                      final String email = _email;
+                      final String password = _password;
+                      if(email.isEmpty){
+                        SnackBar initEmail = const SnackBar(content: const Text("Email is mandatory"),);
+                        ScaffoldMessenger.of(context).showSnackBar(initEmail);
 
+                      }else {
+                        if(password.isEmpty || password.isEmpty && email.isNotEmpty){
+                          SnackBar initPassword = const SnackBar(content: const Text("Password is mandatory"),);
+                          ScaffoldMessenger.of(context).showSnackBar(initPassword);
+                        }else {
+                          context.read<AuthenticationManager>().logInUser(
+                              email: _email,
+                              password: _password
+                          );
+                        }
+                      }
+                      const SizedBox(height: 25);
                     },
                     child: Text(
                       loginButtonTitle,
@@ -127,6 +135,7 @@ class _LogInScreenState extends State<LogInScreen> {
       ),
     );
   }
+  /*
   void authenticateUser(){
     AuthenticationManager _authenticationManager = AuthenticationManager();
     _authenticationManager.logInUser(_email, _password);
@@ -143,4 +152,6 @@ bool validateFields(){
     }
     return false;
   }
+  */
+
 }
