@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project2/helpers-constants/strings.dart';
 import 'package:flutter_project2/managers/authentication_manager.dart';
+import 'package:flutter_project2/managers/google_log_in.dart';
 import 'package:flutter_project2/screens/signup_screen.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'currency_screen.dart';
@@ -18,9 +20,7 @@ class LogInScreen extends StatefulWidget{
 }
 
 class _LogInScreenState extends State<LogInScreen> {
-  final _form = GlobalKey<FormState>();
-  bool _isValidEmail = false;
-  bool _isValidPassword = false;
+
 
   String _email = "";
   String _password = "";
@@ -33,17 +33,29 @@ class _LogInScreenState extends State<LogInScreen> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(appBarLogInTitle), //widget.title
+        centerTitle: true,
       ),
 
       body: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                Container(
+                  //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+
+                    alignment: Alignment.topCenter,
+                    padding: EdgeInsets.symmetric(vertical: 35),
+                  child: Text(
+                    "MyMoney",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: Colors.white, fontSize: 40),
+                  )
+                ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 60.0),
+                  padding: const EdgeInsets.only(top: 20.0),
                   child: Center(
                     child: Container(
-                      width: 200,
-                      height: 150,
+                      width: 100,
+                      height: 40,
                     ),
                   ),
                 ),
@@ -86,8 +98,8 @@ class _LogInScreenState extends State<LogInScreen> {
                   child: const Text('Forgot Password',),
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(),
-                  height: 50,
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  height: 65,
                   width: 250,
                   child: ElevatedButton(
                     onPressed: () {
@@ -113,6 +125,25 @@ class _LogInScreenState extends State<LogInScreen> {
                     child: Text(
                       loginButtonTitle,
                       style: TextStyle(color: Colors.white, fontSize: 25),
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  height: 65,
+                  width: 250,
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+
+                      final provider =
+                      Provider.of<GoogleSignInProvider>(context, listen: false);
+                      provider.googleLogIn();
+                      GoogleSignInProvider.isGoogleLogIn = true;
+                    },
+                    icon: FaIcon(FontAwesomeIcons.google, color:Colors.white),
+                    label: Text(
+                      "Log in with Google",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ),
                 ),

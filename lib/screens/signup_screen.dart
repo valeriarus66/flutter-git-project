@@ -101,6 +101,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     email: _email,
                     password: _password,
                   );
+               /*   Navigator.pushNamed(
+                    context,
+                    CurrencyScreen.routeName,
+                    //SignUpScreen.routeName,
+                  );*/
                   /*
                   bool isValid = validateFields();
                   if (isValid) {
